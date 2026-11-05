@@ -61,8 +61,6 @@ switch ($page) {
 
     case "home":
 
-      
-
         require __DIR__ . "/../views/home.php";
         break;
 
@@ -145,7 +143,7 @@ switch ($page) {
 
 
     // ======================================
-    // BUSINESS ADMIN
+    // BUSINESS ADMIN DASHBOARD
     // ======================================
 
     case "business-dashboard":
@@ -155,7 +153,98 @@ switch ($page) {
 
 
     // ======================================
-    // SELLER
+    // MANAGE SELLERS
+    // ======================================
+
+    case "manage-sellers":
+
+        $success = "";
+        $error = "";
+
+        if (isset($_GET["success"])) {
+
+            if ($_GET["success"] === "added") {
+                $success = "Seller account created successfully!";
+            }
+
+            if ($_GET["success"] === "status-updated") {
+                $success = "Seller account status updated successfully!";
+            }
+        }
+
+        if (isset($_GET["error"])) {
+            $error = "The operation failed. Please check the details and try again.";
+        }
+
+        $businessController->manageSellers();
+        break;
+
+
+    // ======================================
+    // ADD SELLER
+    // ======================================
+
+    case "add-seller":
+
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+
+            header("Location: index.php?page=manage-sellers");
+            exit;
+
+        }
+
+        $result = $businessController->addSeller(
+            $_POST["full_name"] ?? "",
+            $_POST["email"] ?? "",
+            $_POST["password"] ?? ""
+        );
+
+        if ($result) {
+
+            header("Location: index.php?page=manage-sellers&success=added");
+
+        } else {
+
+            header("Location: index.php?page=manage-sellers&error=failed");
+
+        }
+
+        exit;
+
+
+    // ======================================
+    // ACTIVATE / DEACTIVATE SELLER
+    // ======================================
+
+    case "seller-status":
+
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+
+            header("Location: index.php?page=manage-sellers");
+            exit;
+
+        }
+
+        $result = $businessController->changeSellerStatus(
+            $_POST["seller_id"] ?? 0,
+            $_POST["status"] ?? ""
+        );
+
+        if ($result) {
+
+            header("Location: index.php?page=manage-sellers&success=status-updated");
+
+        } else {
+
+            header("Location: index.php?page=manage-sellers&error=failed");
+
+        }
+
+        exit;
+
+
+    // ======================================
+    // SELLER DASHBOARD
     // ======================================
 
     case "seller-dashboard":
@@ -164,8 +253,10 @@ switch ($page) {
             !isset($_SESSION["user_id"]) ||
             $_SESSION["role"] !== "seller"
         ) {
+
             header("Location: index.php?page=login");
             exit;
+
         }
 
         echo "Seller Dashboard";
@@ -173,7 +264,7 @@ switch ($page) {
 
 
     // ======================================
-    // BUYER
+    // BUYER DASHBOARD
     // ======================================
 
     case "buyer-dashboard":
@@ -182,8 +273,10 @@ switch ($page) {
             !isset($_SESSION["user_id"]) ||
             $_SESSION["role"] !== "buyer"
         ) {
+
             header("Location: index.php?page=login");
             exit;
+
         }
 
         echo "Buyer Dashboard";
@@ -191,7 +284,7 @@ switch ($page) {
 
 
     // ======================================
-    // AGORA ADMIN
+    // AGORA ADMIN DASHBOARD
     // ======================================
 
     case "admin-dashboard":
