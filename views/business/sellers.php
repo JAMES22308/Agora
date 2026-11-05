@@ -6,24 +6,40 @@ $pageTitle = "Manage Sellers - Agora";
 require __DIR__ . "/../layouts/header.php";
 
 ?>
+
 <link rel="stylesheet" href="css/business/sellers.css">
 
 <section class="dashboard">
 
-    <div class="dashboard-heading">
+    <!-- PAGE HEADER -->
 
-        <h1>Manage Sellers</h1>
+    <div class="seller-page-heading">
 
-        <p>
-            Add and manage sellers belonging to your business.
-        </p>
+        <div>
+            <h1>Business Sellers</h1>
+
+            <p>
+                View and manage sellers belonging to your business.
+            </p>
+        </div>
+
+        <button
+            type="button"
+            class="add-seller-button"
+            onclick="document.getElementById('addSellerModal').showModal()"
+        >
+            + Add New Seller
+        </button>
 
     </div>
+
+
+    <!-- SUCCESS AND ERROR MESSAGES -->
 
     <?php if (!empty($success)): ?>
 
         <p class="success-message">
-            <?php echo htmlspecialchars($success); ?>
+            <?= htmlspecialchars($success) ?>
         </p>
 
     <?php endif; ?>
@@ -31,81 +47,22 @@ require __DIR__ . "/../layouts/header.php";
     <?php if (!empty($error)): ?>
 
         <p class="error-message">
-            <?php echo htmlspecialchars($error); ?>
+            <?= htmlspecialchars($error) ?>
         </p>
 
     <?php endif; ?>
 
 
-    <!-- ADD SELLER FORM -->
+    <!-- SELLER TABLE -->
 
-    <div class="card">
-
-        <h2>Add New Seller</h2>
-
-        <form
-            action="index.php?page=add-seller"
-            method="POST"
-        >
-
-            <div class="form-group">
-
-                <label for="full_name">Full Name</label>
-
-                <input
-                    type="text"
-                    id="full_name"
-                    name="full_name"
-                    required
-                >
-
-            </div>
-
-            <div class="form-group">
-
-                <label for="email">Email Address</label>
-
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                >
-
-            </div>
-
-            <div class="form-group">
-
-                <label for="password">Temporary Password</label>
-
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    minlength="8"
-                    required
-                >
-
-            </div>
-
-            <button type="submit">
-                Add Seller
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <!-- SELLER LIST -->
-
-    <div class="card" style="margin-top: 25px;">
-
-        <h2>Business Sellers</h2>
+    <div class="card seller-table-card">
 
         <?php if (empty($sellers)): ?>
 
-            <p>No sellers have been added to your business yet.</p>
+            <div class="empty-state">
+                <h3>No Sellers Found</h3>
+                <p>Add a seller to get started.</p>
+            </div>
 
         <?php else: ?>
 
@@ -114,14 +71,13 @@ require __DIR__ . "/../layouts/header.php";
                 <table>
 
                     <thead>
-
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Status</th>
+                            <th>Seller ID</th>
+                            <th>Full Name</th>
+                            <th>Email Address</th>
+                            <th>Account Status</th>
                             <th>Action</th>
                         </tr>
-
                     </thead>
 
                     <tbody>
@@ -131,22 +87,30 @@ require __DIR__ . "/../layouts/header.php";
                             <tr>
 
                                 <td>
-                                    <?php echo htmlspecialchars($seller["full_name"]); ?>
+                                    #<?= (int) $seller["user_id"] ?>
                                 </td>
 
                                 <td>
-                                    <?php echo htmlspecialchars($seller["email"]); ?>
+                                    <?= htmlspecialchars($seller["full_name"]) ?>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($seller["email"]) ?>
                                 </td>
 
                                 <td>
 
                                     <?php if ($seller["is_active"] == 1): ?>
 
-                                        <span class="status-active">Active</span>
+                                        <span class="status-badge status-active">
+                                            Active
+                                        </span>
 
                                     <?php else: ?>
 
-                                        <span class="status-inactive">Inactive</span>
+                                        <span class="status-badge status-inactive">
+                                            Inactive
+                                        </span>
 
                                     <?php endif; ?>
 
@@ -162,21 +126,22 @@ require __DIR__ . "/../layouts/header.php";
                                         <input
                                             type="hidden"
                                             name="seller_id"
-                                            value="<?php echo (int) $seller["user_id"]; ?>"
+                                            value="<?= (int) $seller["user_id"] ?>"
                                         >
 
                                         <input
                                             type="hidden"
                                             name="status"
-                                            value="<?php echo $seller["is_active"] == 1 ? "0" : "1"; ?>"
+                                            value="<?= $seller["is_active"] == 1 ? "0" : "1" ?>"
                                         >
 
-                                        <button type="submit">
-
-                                            <?php echo $seller["is_active"] == 1
+                                        <button
+                                            type="submit"
+                                            class="<?= $seller["is_active"] == 1 ? "deactivate-button" : "activate-button" ?>"
+                                        >
+                                            <?= $seller["is_active"] == 1
                                                 ? "Deactivate"
-                                                : "Activate"; ?>
-
+                                                : "Activate" ?>
                                         </button>
 
                                     </form>
@@ -196,6 +161,99 @@ require __DIR__ . "/../layouts/header.php";
         <?php endif; ?>
 
     </div>
+
+
+    <!-- ADD SELLER POPUP -->
+
+    <dialog id="addSellerModal" class="seller-modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>Add New Seller</h2>
+                <p>Create a seller account for your business.</p>
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="document.getElementById('addSellerModal').close()"
+                aria-label="Close"
+            >
+                &times;
+            </button>
+
+        </div>
+
+        <form
+            action="index.php?page=add-seller"
+            method="POST"
+        >
+
+            <div class="form-group">
+
+                <label for="full_name">Full Name</label>
+
+                <input
+                    type="text"
+                    id="full_name"
+                    name="full_name"
+                    placeholder="Enter seller's full name"
+                    maxlength="100"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="email">Email Address</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter seller's email"
+                    maxlength="150"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="password">Temporary Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Minimum 8 characters"
+                    minlength="8"
+                    required
+                >
+
+            </div>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="cancel-button"
+                    onclick="document.getElementById('addSellerModal').close()"
+                >
+                    Cancel
+                </button>
+
+                <button type="submit" class="add-seller-button">
+                    Add Seller
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
 
 </section>
 

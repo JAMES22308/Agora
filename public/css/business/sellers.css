@@ -1,0 +1,298 @@
+
+/* =====================================
+   BUSINESS SELLERS PAGE
+===================================== */
+
+.dashboard {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Page heading */
+
+.seller-page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.seller-page-heading h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+
+.seller-page-heading p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Add New Seller button */
+
+.add-seller-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.add-seller-button:hover {
+    background-color: #1d4ed8;
+}
+
+/* Table container */
+
+.seller-table-card {
+    width: 100%;
+    padding: 0;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Sellers table */
+
+.seller-table-card table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.seller-table-card thead {
+    background-color: #f8fafc;
+}
+
+.seller-table-card th {
+    padding: 16px 20px;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.seller-table-card td {
+    padding: 17px 20px;
+    color: #334155;
+    font-size: 14px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.seller-table-card tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.seller-table-card tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Account status */
+
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-active {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-inactive {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Activate and deactivate buttons */
+
+.activate-button,
+.deactivate-button {
+    padding: 7px 13px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.activate-button {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.activate-button:hover {
+    background-color: #bbf7d0;
+}
+
+.deactivate-button {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.deactivate-button:hover {
+    background-color: #fecaca;
+}
+
+/* Empty state */
+
+.empty-state {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.empty-state h3 {
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: #64748b;
+}
+
+/* Add seller popup */
+
+.seller-modal {
+    width: 90%;
+    max-width: 480px;
+    padding: 28px;
+    margin: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.seller-modal::backdrop {
+    background: rgba(15, 23, 42, 0.55);
+}
+
+/* Popup heading */
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.modal-header h2 {
+    font-size: 21px;
+    margin-bottom: 5px;
+}
+
+.modal-header p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Popup close button */
+
+.modal-close {
+    background: transparent;
+    color: #64748b;
+    padding: 0 5px;
+    font-size: 26px;
+}
+
+.modal-close:hover {
+    background: transparent;
+    color: #1e293b;
+}
+
+/* Popup form */
+
+.seller-modal .form-group {
+    margin-bottom: 18px;
+}
+
+.seller-modal .form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.seller-modal .form-group input {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+.seller-modal .form-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+/* Popup footer buttons */
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.cancel-button {
+    background-color: #f1f5f9;
+    color: #334155;
+}
+
+.cancel-button:hover {
+    background-color: #e2e8f0;
+}
+
+/* Success and error messages */
+
+.success-message {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.error-message {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Responsive layout */
+
+@media (max-width: 700px) {
+
+    .seller-page-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .seller-modal {
+        padding: 20px;
+    }
+
+}

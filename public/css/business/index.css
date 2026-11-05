@@ -1,0 +1,23 @@
+
+/* Clickable dashboard cards */
+
+.dashboard-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-link h3 {
+    color: #2563eb;
+    margin-bottom: 10px;
+}
+
+.dashboard-link p {
+    color: #64748b;
+}

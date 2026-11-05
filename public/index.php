@@ -152,6 +152,58 @@ switch ($page) {
 
 
     // ======================================
+    // BUSINESS PROFILE
+    // ======================================
+
+    case "business-profile":
+
+        $success = "";
+        $error = "";
+
+        if (isset($_GET["success"])) {
+            $success = "Business profile updated successfully!";
+        }
+
+        if (isset($_GET["error"])) {
+            $error = "Unable to update business profile. Please check your details and logo.";
+        }
+
+        $businessController->profile($success, $error);
+        break;
+
+
+    // ======================================
+    // UPDATE BUSINESS PROFILE
+    // ======================================
+
+    case "update-business-profile":
+
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+
+            header("Location: index.php?page=business-profile");
+            exit;
+
+        }
+
+        $result = $businessController->updateProfile(
+            $_POST["business_name"] ?? "",
+            $_FILES["logo"] ?? []
+        );
+
+        if ($result["success"]) {
+
+            header("Location: index.php?page=business-profile&success=1");
+
+        } else {
+
+            header("Location: index.php?page=business-profile&error=1");
+
+        }
+
+        exit;
+
+
+    // ======================================
     // MANAGE SELLERS
     // ======================================
 
@@ -343,7 +395,7 @@ switch ($page) {
 
         if (
             !isset($_SESSION["user_id"]) ||
-            $_SESSION["role"] !== "seller"
+            ($_SESSION["role"] ?? "") !== "seller"
         ) {
 
             header("Location: index.php?page=login");
@@ -363,7 +415,7 @@ switch ($page) {
 
         if (
             !isset($_SESSION["user_id"]) ||
-            $_SESSION["role"] !== "buyer"
+            ($_SESSION["role"] ?? "") !== "buyer"
         ) {
 
             header("Location: index.php?page=login");

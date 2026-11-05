@@ -6,6 +6,7 @@ $pageTitle = "Business Dashboard - Agora";
 require __DIR__ . "/../layouts/header.php";
 
 ?>
+<link rel="stylesheet" href="css/business/index.css">
 
 <section class="dashboard">
 
@@ -44,7 +45,9 @@ require __DIR__ . "/../layouts/header.php";
 
     <div class="dashboard-grid">
 
-        <div class="card">
+        <!-- BUSINESS PROFILE -->
+
+        <a href="index.php?page=business-profile" class="card dashboard-link">
 
             <h3>Business Profile</h3>
 
@@ -52,9 +55,12 @@ require __DIR__ . "/../layouts/header.php";
                 View and update your business information and logo.
             </p>
 
-        </div>
+        </a>
 
-        <div class="card">
+
+        <!-- MANAGE SELLERS -->
+
+        <a href="index.php?page=manage-sellers" class="card dashboard-link">
 
             <h3>Manage Sellers</h3>
 
@@ -63,9 +69,12 @@ require __DIR__ . "/../layouts/header.php";
                 sellers belonging to your business.
             </p>
 
-        </div>
+        </a>
 
-        <div class="card">
+
+        <!-- MANAGE BUYERS -->
+
+        <a href="index.php?page=manage-buyers" class="card dashboard-link">
 
             <h3>Manage Buyers</h3>
 
@@ -74,7 +83,7 @@ require __DIR__ . "/../layouts/header.php";
                 buyers belonging to your business.
             </p>
 
-        </div>
+        </a>
 
     </div>
 
