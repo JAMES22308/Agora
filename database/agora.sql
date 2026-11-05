@@ -1,16 +1,30 @@
+-- ==========================================
+-- RESET AGORA DATABASE
+-- ==========================================
 
-CREATE DATABASE IF NOT EXISTS agora;
+DROP DATABASE IF EXISTS agora;
+
+CREATE DATABASE agora;
 
 USE agora;
 
--- 1. Businesses
-CREATE TABLE IF NOT EXISTS businesses (
+
+-- ==========================================
+-- 1. BUSINESSES
+-- ==========================================
+
+CREATE TABLE businesses (
     business_id INT AUTO_INCREMENT PRIMARY KEY,
-    business_name VARCHAR(100) NOT NULL
+    business_name VARCHAR(100) NOT NULL,
+    logo VARCHAR(255) NULL
 );
 
--- 2. Users
-CREATE TABLE IF NOT EXISTS users (
+
+-- ==========================================
+-- 2. USERS
+-- ==========================================
+
+CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     business_id INT NULL,
     full_name VARCHAR(100) NOT NULL,
@@ -28,8 +42,12 @@ CREATE TABLE IF NOT EXISTS users (
         REFERENCES businesses(business_id)
 );
 
--- 3. Products
-CREATE TABLE IF NOT EXISTS products (
+
+-- ==========================================
+-- 3. PRODUCTS
+-- ==========================================
+
+CREATE TABLE products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
     seller_id INT NOT NULL,
     product_name VARCHAR(150) NOT NULL,
@@ -41,8 +59,12 @@ CREATE TABLE IF NOT EXISTS products (
         REFERENCES users(user_id)
 );
 
--- 4. Orders
-CREATE TABLE IF NOT EXISTS orders (
+
+-- ==========================================
+-- 4. ORDERS
+-- ==========================================
+
+CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     buyer_id INT NOT NULL,
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -51,8 +73,12 @@ CREATE TABLE IF NOT EXISTS orders (
         REFERENCES users(user_id)
 );
 
--- 5. Order Items
-CREATE TABLE IF NOT EXISTS order_items (
+
+-- ==========================================
+-- 5. ORDER ITEMS
+-- ==========================================
+
+CREATE TABLE order_items (
     order_item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     product_id INT NOT NULL,
@@ -64,3 +90,70 @@ CREATE TABLE IF NOT EXISTS order_items (
     FOREIGN KEY (product_id)
         REFERENCES products(product_id)
 );
+
+
+USE agora;
+
+INSERT INTO businesses (business_name)
+VALUES
+('NZ Mega Supplies'),
+('Fox Butcher');
+
+
+
+INSERT INTO users
+(full_name, email, password, role, business_id, is_active)
+VALUES
+
+(
+    'Sam Colo',
+    'sam@nzmega.co.nz',
+    '$2y$12$eBzlcx/iXBcg862rPHfaZuBhUq277g7F6RPCpGLSRhA6J59KhE7Vu',
+    'business_admin',
+    1,
+    1
+),
+
+(
+    'James Kennedy',
+    'james@nzmega.co.nz',
+    '$2y$12$nrLuGqvwhgCKTeqE4xIpSuVWCI.Adc5SGwm9tOTODXNyRYqZAHfgK',
+    'seller',
+    1,
+    1
+),
+
+(
+    'Alex Fox',
+    'alex@foxbutcher.co.nz',
+    '$2y$12$ROdKbPxJED6PU.L.w14zQOvmE4dq9jd9vw3XZDAPhZRtCpxFVNsOES',
+    'business_admin',
+    2,
+    1
+),
+
+(
+    'Lisa Schmitt',
+    'lisa@foxbutcher.co.nz',
+    '$2y$12$vsnDwPpgKGQ/xCY.vTupXOUCn8oKcaXsTB8YQ.rnBvY0G4KxLQR/S',
+    'buyer',
+    2,
+    1
+),
+
+(
+    'Simon Lau',
+    'simon@agora.co.nz',
+    '$2y$12$ROdKbPxJED6PU.L.w14zQOvmE4dq9jd9vw3XZDAPhZRtCpxFVNsOES',
+    'agora_admin',
+    NULL,
+    1
+);
+
+
+INSERT INTO products
+(seller_id, product_name, description, price, quantity)
+VALUES
+(2, 'Chicken Breast', 'Fresh chicken breast', 12.50, 50),
+(2, 'Beef Steak', 'Premium beef steak', 18.00, 30),
+(2, 'Fresh Salmon', 'Fresh salmon fillet', 15.00, 20);

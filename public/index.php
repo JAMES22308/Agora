@@ -54,7 +54,6 @@ $page = $_GET["page"] ?? "home";
 
 switch ($page) {
 
-
     // ======================================
     // HOME PAGE
     // ======================================
@@ -170,13 +169,43 @@ switch ($page) {
             if ($_GET["success"] === "status-updated") {
                 $success = "Seller account status updated successfully!";
             }
+
         }
 
         if (isset($_GET["error"])) {
             $error = "The operation failed. Please check the details and try again.";
         }
 
-        $businessController->manageSellers();
+        $businessController->manageSellers($success, $error);
+        break;
+
+
+    // ======================================
+    // MANAGE BUYERS
+    // ======================================
+
+    case "manage-buyers":
+
+        $success = "";
+        $error = "";
+
+        if (isset($_GET["success"])) {
+
+            if ($_GET["success"] === "added") {
+                $success = "Buyer account created successfully!";
+            }
+
+            if ($_GET["success"] === "status-updated") {
+                $success = "Buyer account status updated successfully!";
+            }
+
+        }
+
+        if (isset($_GET["error"])) {
+            $error = "The operation failed. Please check the details and try again.";
+        }
+
+        $businessController->manageBuyers($success, $error);
         break;
 
 
@@ -213,6 +242,38 @@ switch ($page) {
 
 
     // ======================================
+    // ADD BUYER
+    // ======================================
+
+    case "add-buyer":
+
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+
+            header("Location: index.php?page=manage-buyers");
+            exit;
+
+        }
+
+        $result = $businessController->addBuyer(
+            $_POST["full_name"] ?? "",
+            $_POST["email"] ?? "",
+            $_POST["password"] ?? ""
+        );
+
+        if ($result) {
+
+            header("Location: index.php?page=manage-buyers&success=added");
+
+        } else {
+
+            header("Location: index.php?page=manage-buyers&error=1");
+
+        }
+
+        exit;
+
+
+    // ======================================
     // ACTIVATE / DEACTIVATE SELLER
     // ======================================
 
@@ -237,6 +298,37 @@ switch ($page) {
         } else {
 
             header("Location: index.php?page=manage-sellers&error=failed");
+
+        }
+
+        exit;
+
+
+    // ======================================
+    // ACTIVATE / DEACTIVATE BUYER
+    // ======================================
+
+    case "buyer-status":
+
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+
+            header("Location: index.php?page=manage-buyers");
+            exit;
+
+        }
+
+        $result = $businessController->changeBuyerStatus(
+            $_POST["buyer_id"] ?? 0,
+            $_POST["status"] ?? ""
+        );
+
+        if ($result) {
+
+            header("Location: index.php?page=manage-buyers&success=status-updated");
+
+        } else {
+
+            header("Location: index.php?page=manage-buyers&error=failed");
 
         }
 
