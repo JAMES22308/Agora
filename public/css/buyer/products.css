@@ -233,3 +233,35 @@
 .back-button:hover {
     background: #e2e8f0;
 }
+
+.view-product-button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px;
+    border: none;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.view-product-button:hover {
+    background: #1d4ed8;
+}
+
+
+/* Business Name */
+.product-business {
+    font-size: 13px;
+    color: #666;
+    margin-top: 8px;
+    margin-bottom: 12px;
+}
+
+.product-business span {
+    font-weight: 600;
+    color: #444;
+}

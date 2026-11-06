@@ -9,16 +9,16 @@ require __DIR__ . "/../../layouts/header.php";
 
 <section class="products-page">
 
-<a href="index.php?page=buyer-dashboard" class="back-button">
-    ← Back to Dashboard
-</a>
+    <a href="index.php?page=buyer-dashboard" class="back-button">
+        ← Back to Dashboard
+    </a>
 
-<div class="products-heading">
-    <div>
-        <h1>Browse Products</h1>
-        <p>Discover products available from Agora sellers.</p>
+    <div class="products-heading">
+        <div>
+            <h1>Browse Products</h1>
+            <p>Discover products available from Agora sellers.</p>
+        </div>
     </div>
-</div>
 
     <!-- Search Products -->
     <form action="index.php" method="GET" class="search-form">
@@ -95,6 +95,15 @@ require __DIR__ . "/../../layouts/header.php";
                                 <?= htmlspecialchars($product["description"] ?? "") ?>
                             </p>
 
+                            <!-- Business Name -->
+                            <p class="product-business">
+                                <span>Sold by:</span>
+
+                                <?= htmlspecialchars(
+                                    $product["business_name"] ?? "Independent Seller"
+                                ) ?>
+                            </p>
+
                             <div class="product-price">
                                 $<?= number_format((float)$product["price"], 2) ?>
                             </div>
@@ -117,13 +126,12 @@ require __DIR__ . "/../../layouts/header.php";
 
                             </div>
 
-                            <button
-                                type="button"
+                            <a
+                                href="index.php?page=product-details&id=<?= (int)$product['product_id'] ?>"
                                 class="view-product-button"
-                                disabled
                             >
                                 View Product
-                            </button>
+                            </a>
 
                         </div>
 

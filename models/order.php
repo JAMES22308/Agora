@@ -10,7 +10,10 @@ class Order
         $this->conn = $conn;
     }
 
-    // Purchase a product
+    // ==========================================
+    // PURCHASE A PRODUCT
+    // ==========================================
+
     public function purchase($buyerId, $productId, $quantity)
     {
         if (
@@ -28,7 +31,7 @@ class Order
             // Start database transaction
             $this->conn->beginTransaction();
 
-            // Get product and lock its row while purchasing
+            // Find product and lock its row
             $sql = "SELECT product_id, price, quantity
                     FROM products
                     WHERE product_id = ?
@@ -39,6 +42,7 @@ class Order
 
             $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            // Check whether product exists
             if (!$product) {
                 $this->conn->rollBack();
 
@@ -58,7 +62,7 @@ class Order
                 ];
             }
 
-            // Save the order
+            // Create new order
             $sql = "INSERT INTO orders (buyer_id)
                     VALUES (?)";
 
@@ -81,7 +85,7 @@ class Order
                 $product["price"]
             ]);
 
-            // Reduce available stock
+            // Reduce product stock
             $sql = "UPDATE products
                     SET quantity = quantity - ?
                     WHERE product_id = ?
@@ -110,6 +114,7 @@ class Order
 
         } catch (Exception $e) {
 
+            // Undo changes if something fails
             if ($this->conn->inTransaction()) {
                 $this->conn->rollBack();
             }
@@ -119,6 +124,40 @@ class Order
                 "message" => "Unable to complete your purchase."
             ];
         }
+    }
+
+
+    // ==========================================
+    // GET ALL ORDERS BELONGING TO A BUYER
+    // ==========================================
+
+    public function getByBuyerId($buyerId)
+    {
+        $sql = "SELECT
+                    orders.order_id,
+                    orders.order_date,
+                    order_items.product_id,
+                    order_items.quantity,
+                    order_items.unit_price,
+                    products.product_name
+                FROM orders
+
+                INNER JOIN order_items
+                    ON orders.order_id = order_items.order_id
+
+                INNER JOIN products
+                    ON order_items.product_id = products.product_id
+
+                WHERE orders.buyer_id = ?
+
+                ORDER BY
+                    orders.order_date DESC,
+                    orders.order_id DESC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$buyerId]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

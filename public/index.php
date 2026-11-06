@@ -26,6 +26,7 @@ require_once __DIR__ . "/../controllers/SellerController.php";
 require_once __DIR__ . "/../controllers/BuyerController.php";
 require_once __DIR__ . "/../controllers/ProductController.php";
 require_once __DIR__ . "/../controllers/AdminController.php";
+require_once __DIR__ . "/../controllers/OrderController.php";
 
 
 // ==========================================
@@ -38,6 +39,7 @@ $businessController = new BusinessController($conn);
 $sellerController = new SellerController($conn);
 $buyerController = new BuyerController($conn);
 $productController = new ProductController($conn);
+$orderController = new OrderController($conn);
 $adminController = new AdminController($conn);
 
 
@@ -631,6 +633,16 @@ case "browse-products":
 case "product-details":
 
     $productController->show($_GET["id"] ?? 0);
+    break;
+
+case "purchase-product":
+
+    $orderController->purchase();
+    break;
+
+case "my-orders":
+
+    $orderController->myOrders();
     break;
 
 

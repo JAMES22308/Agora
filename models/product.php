@@ -10,45 +10,55 @@ class Product
         $this->conn = $conn;
     }
 
-    // Get all products
-    
-// Get all products or search products
-public function getAll($search = "")
-{
-    if ($search !== "") {
+    // Get all products or search products, including business name
+    public function getAll($search = "")
+    {
+        $sql = "SELECT
+                    p.*,
+                    b.business_name
+                FROM products p
+                LEFT JOIN users u
+                    ON p.seller_id = u.user_id
+                LEFT JOIN businesses b
+                    ON u.business_id = b.business_id";
 
-        $sql = "SELECT * FROM products
-                WHERE product_name LIKE ?
-                OR description LIKE ?
-                ORDER BY product_id DESC";
+        if ($search !== "") {
+            $sql .= " WHERE p.product_name LIKE ?
+                      OR p.description LIKE ?
+                      OR b.business_name LIKE ?";
+        }
 
-        $stmt = $this->conn->prepare($sql);
-
-        $keyword = "%" . $search . "%";
-
-        $stmt->execute([
-            $keyword,
-            $keyword
-        ]);
-
-    } else {
-
-        $sql = "SELECT * FROM products
-                ORDER BY product_id DESC";
+        $sql .= " ORDER BY p.product_id DESC";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
 
+        if ($search !== "") {
+            $keyword = "%" . $search . "%";
+
+            $stmt->execute([
+                $keyword,
+                $keyword,
+                $keyword
+            ]);
+        } else {
+            $stmt->execute();
+        }
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-
-    // Find a product using its ID
+    // Find a product using its ID, including business name
     public function findById($productId)
     {
-        $sql = "SELECT * FROM products WHERE product_id = ?";
+        $sql = "SELECT
+                    p.*,
+                    b.business_name
+                FROM products p
+                LEFT JOIN users u
+                    ON p.seller_id = u.user_id
+                LEFT JOIN businesses b
+                    ON u.business_id = b.business_id
+                WHERE p.product_id = ?";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$productId]);

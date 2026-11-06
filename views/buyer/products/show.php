@@ -1,3 +1,4 @@
+
 <?php
 
 require __DIR__ . "/../../layouts/header.php";
@@ -8,16 +9,36 @@ require __DIR__ . "/../../layouts/header.php";
 
 <section class="product-details-page">
 
+    <!-- Back Button -->
     <a href="index.php?page=browse-products" class="back-button">
         ← Back to Products
     </a>
 
+    <!-- Purchase Feedback -->
+    <?php if (isset($_GET["purchase"]) && $_GET["purchase"] === "success"): ?>
+
+        <div class="success-message">
+            Your purchase was completed successfully!
+        </div>
+
+    <?php elseif (isset($_GET["purchase"]) && $_GET["purchase"] === "failed"): ?>
+
+        <div class="error-message">
+            Purchase unsuccessful. The product may have insufficient stock.
+            Please try again.
+        </div>
+
+    <?php endif; ?>
+
+    <!-- Product Details -->
     <div class="product-details-card">
 
+        <!-- Product Image Placeholder -->
         <div class="product-image">
             <span>Product</span>
         </div>
 
+        <!-- Product Information -->
         <div class="product-information">
 
             <h1>
@@ -32,6 +53,7 @@ require __DIR__ . "/../../layouts/header.php";
                 $<?= number_format((float)$product["price"], 2) ?>
             </h2>
 
+            <!-- Stock Status -->
             <div class="stock">
 
                 <?php if ((int)$product["quantity"] > 0): ?>
@@ -50,23 +72,23 @@ require __DIR__ . "/../../layouts/header.php";
 
             </div>
 
+            <!-- Purchase Form -->
             <?php if ((int)$product["quantity"] > 0): ?>
 
-                <form action="index.php" method="GET">
+                <form
+                    action="index.php?page=purchase-product"
+                    method="POST"
+                >
 
                     <input
                         type="hidden"
-                        name="page"
-                        value="purchase-product"
-                    >
-
-                    <input
-                        type="hidden"
-                        name="id"
+                        name="product_id"
                         value="<?= (int)$product["product_id"] ?>"
                     >
 
-                    <label for="quantity">Quantity</label>
+                    <label for="quantity">
+                        Quantity
+                    </label>
 
                     <input
                         type="number"
