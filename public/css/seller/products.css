@@ -1,0 +1,533 @@
+
+/* ==========================================
+   SELLER PRODUCTS - MODERN DASHBOARD
+========================================== */
+
+.seller-products-page,
+.products-back-container {
+    width: 92%;
+    max-width: 1250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.products-back-container {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+/* ==========================================
+   BACK BUTTON
+========================================== */
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.back-button:hover {
+    color: #2563eb;
+}
+
+/* ==========================================
+   PAGE HEADING
+========================================== */
+
+.products-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.products-heading h1 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.7px;
+    color: #172033;
+    margin: 0 0 7px;
+}
+
+.products-heading p {
+    font-size: 14px;
+    color: #7b8798;
+    margin: 0;
+}
+
+/* ==========================================
+   ADD PRODUCT BUTTON
+========================================== */
+
+.add-product-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 19px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.15);
+    transition: all 0.2s ease;
+}
+
+.add-product-button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* ==========================================
+   PRODUCTS TABLE CARD
+========================================== */
+
+.product-table-card {
+    background: #ffffff;
+    border: 1px solid #e8edf3;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+/* Table Header */
+
+.products-table thead {
+    background: #f8fafc;
+}
+
+.products-table th {
+    padding: 17px 20px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e8edf3;
+    white-space: nowrap;
+}
+
+/* Table Body */
+
+.products-table td {
+    padding: 18px 20px;
+    color: #475569;
+    font-size: 14px;
+    border-bottom: 1px solid #edf0f4;
+    vertical-align: middle;
+}
+
+.products-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.products-table tbody tr:hover {
+    background: #f8faff;
+}
+
+.products-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Product ID */
+
+.products-table td:first-child {
+    color: #64748b;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Product Name */
+
+.products-table td:nth-child(2) {
+    color: #1e293b;
+    font-weight: 600;
+    min-width: 150px;
+}
+
+/* Description */
+
+.products-table td:nth-child(3) {
+    color: #64748b;
+    max-width: 260px;
+    line-height: 1.5;
+}
+
+/* Price */
+
+.products-table td:nth-child(4) {
+    color: #0f172a;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Quantity */
+
+.products-table td:nth-child(5) {
+    color: #475569;
+    font-weight: 500;
+}
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.product-actions {
+    white-space: nowrap;
+}
+
+.product-actions form {
+    display: inline-block;
+    margin: 0;
+}
+
+.edit-button,
+.delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 13px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 5px;
+}
+
+/* Edit */
+
+.edit-button {
+    background: #eff6ff;
+    color: #2563eb;
+    border-color: #dbeafe;
+}
+
+.edit-button:hover {
+    background: #dbeafe;
+    border-color: #bfdbfe;
+}
+
+/* Delete */
+
+.delete-button {
+    background: #fff1f2;
+    color: #e11d48;
+    border-color: #ffe4e6;
+}
+
+.delete-button:hover {
+    background: #ffe4e6;
+    border-color: #fecdd3;
+}
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-state {
+    text-align: center;
+    padding: 65px 20px;
+}
+
+.empty-state h2 {
+    font-size: 19px;
+    color: #1e293b;
+    margin-bottom: 9px;
+}
+
+.empty-state p {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* ==========================================
+   MODAL BACKGROUND
+========================================== */
+
+.product-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.55);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+}
+
+/* ==========================================
+   MODAL CONTENT
+========================================== */
+
+.product-modal-content {
+    background: #ffffff;
+    width: 100%;
+    max-width: 540px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+    animation: modalAppear 0.2s ease;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ==========================================
+   MODAL HEADER
+========================================== */
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.modal-header h2 {
+    color: #172033;
+    font-size: 21px;
+    font-weight: 700;
+    margin: 0 0 7px;
+}
+
+.modal-header p {
+    color: #94a3b8;
+    font-size: 13px;
+    margin: 0;
+}
+
+.modal-close {
+    background: #f1f5f9;
+    color: #64748b;
+    border: none;
+    border-radius: 7px;
+    width: 32px;
+    height: 32px;
+    font-size: 23px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+/* ==========================================
+   MODAL FORM
+========================================== */
+
+.product-modal .form-group {
+    margin-bottom: 19px;
+}
+
+.product-modal .form-group label {
+    display: block;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.product-modal .form-group input,
+.product-modal .form-group textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #dce3ec;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1e293b;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.product-modal .form-group input::placeholder,
+.product-modal .form-group textarea::placeholder {
+    color: #a0acba;
+}
+
+.product-modal .form-group input:focus,
+.product-modal .form-group textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.product-modal .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* ==========================================
+   PRICE AND QUANTITY
+========================================== */
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* ==========================================
+   MODAL FOOTER BUTTONS
+========================================== */
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #edf0f4;
+}
+
+.cancel-button,
+.save-product-button {
+    padding: 11px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-button {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.cancel-button:hover {
+    background: #e2e8f0;
+}
+
+.save-product-button {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.save-product-button:hover {
+    background: #1d4ed8;
+}
+
+/* ==========================================
+   SUCCESS AND ERROR MESSAGES
+========================================== */
+
+.success-message,
+.error-message {
+    padding: 13px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.success-message {
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.error-message {
+    background: #fff1f2;
+    color: #be123c;
+    border: 1px solid #fecdd3;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width: 768px) {
+
+    .seller-products-page,
+    .products-back-container {
+        width: 94%;
+    }
+
+    .products-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .add-product-button {
+        width: 100%;
+    }
+
+    .products-heading h1 {
+        font-size: 25px;
+    }
+
+    .products-table th,
+    .products-table td {
+        padding: 14px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .product-modal-content {
+        padding: 22px 18px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-button,
+    .save-product-button {
+        width: 100%;
+    }
+
+}

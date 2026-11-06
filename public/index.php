@@ -403,8 +403,167 @@ switch ($page) {
 
         }
 
-        echo "Seller Dashboard";
+        require __DIR__ . "/../views/seller/index.php";
         break;
+
+
+    // ======================================
+    // SELLER PROFILE
+    // ======================================
+
+    case "seller-profile":
+
+        $success = "";
+        $error = "";
+
+        if (isset($_GET["success"]) && $_GET["success"] === "updated") {
+            $success = "Your profile has been updated successfully!";
+        }
+
+        if (isset($_GET["error"])) {
+            $error = "Unable to update your profile. Please check your details.";
+        }
+
+        $sellerController->profile();
+        break;
+
+
+    // ======================================
+    // UPDATE SELLER PROFILE
+    // ======================================
+
+    case "update-seller-profile":
+
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+
+            header("Location: index.php?page=seller-profile");
+            exit;
+
+        }
+
+        $result = $sellerController->updateProfile(
+            $_POST["full_name"] ?? "",
+            $_POST["email"] ?? ""
+        );
+
+        if ($result) {
+
+            header("Location: index.php?page=seller-profile&success=updated");
+
+        } else {
+
+            header("Location: index.php?page=seller-profile&error=update_failed");
+
+        }
+
+        exit;
+
+
+    // ======================================
+    // SELLER PRODUCTS
+    // ======================================
+
+    case "my-products":
+
+        $productController->myProducts();
+        break;
+
+
+    // ======================================
+    // ADD PRODUCT
+    // ======================================
+
+    case "add-product":
+
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+
+            header("Location: index.php?page=my-products");
+            exit;
+
+        }
+
+        $result = $productController->create(
+            $_POST["product_name"] ?? "",
+            $_POST["description"] ?? "",
+            $_POST["price"] ?? "",
+            $_POST["quantity"] ?? ""
+        );
+
+        if ($result) {
+
+            header("Location: index.php?page=my-products&success=added");
+
+        } else {
+
+            header("Location: index.php?page=my-products&error=failed");
+
+        }
+
+        exit;
+
+
+    // ======================================
+    // UPDATE PRODUCT
+    // ======================================
+
+    case "update-product":
+
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+
+            header("Location: index.php?page=my-products");
+            exit;
+
+        }
+
+        $result = $productController->update(
+            $_POST["product_id"] ?? 0,
+            $_POST["product_name"] ?? "",
+            $_POST["description"] ?? "",
+            $_POST["price"] ?? "",
+            $_POST["quantity"] ?? ""
+        );
+
+        if ($result) {
+
+            header("Location: index.php?page=my-products&success=updated");
+
+        } else {
+
+            header("Location: index.php?page=my-products&error=failed");
+
+        }
+
+        exit;
+
+
+    // ======================================
+    // DELETE PRODUCT
+    // ======================================
+
+    case "delete-product":
+
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+
+            header("Location: index.php?page=my-products");
+            exit;
+
+        }
+
+        $result = $productController->delete(
+            $_POST["product_id"] ?? 0
+        );
+
+        if ($result) {
+
+            header("Location: index.php?page=my-products&success=deleted");
+
+        } else {
+
+            header("Location: index.php?page=my-products&error=failed");
+
+        }
+
+        exit;
 
 
     // ======================================

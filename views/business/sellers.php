@@ -9,6 +9,19 @@ require __DIR__ . "/../layouts/header.php";
 
 <link rel="stylesheet" href="css/business/sellers.css">
 
+<!-- BACK TO DASHBOARD -->
+
+<div class="seller-back-container">
+
+    <a href="index.php?page=business-dashboard" class="back-button">
+        &larr; Back to Dashboard
+    </a>
+
+</div>
+
+
+<!-- SELLERS PAGE -->
+
 <section class="dashboard">
 
     <!-- PAGE HEADER -->

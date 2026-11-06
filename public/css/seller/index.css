@@ -1,0 +1,101 @@
+
+/* ==========================================
+   SELLER DASHBOARD
+========================================== */
+
+.seller-dashboard {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ==========================================
+   WELCOME SECTION
+========================================== */
+
+.seller-welcome {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.seller-welcome h1 {
+    font-size: 28px;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.seller-welcome p {
+    color: #334155;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.seller-welcome span {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* ==========================================
+   DASHBOARD CARDS
+========================================== */
+
+.seller-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.seller-card {
+    display: block;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 25px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seller-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.seller-card-icon {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.seller-card h2 {
+    color: #1e293b;
+    font-size: 19px;
+    margin-bottom: 8px;
+}
+
+.seller-card p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width: 768px) {
+    .seller-dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .seller-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .seller-welcome {
+        padding: 22px;
+    }
+}
