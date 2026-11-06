@@ -157,3 +157,17 @@ VALUES
 (2, 'Chicken Breast', 'Fresh chicken breast', 12.50, 50),
 (2, 'Beef Steak', 'Premium beef steak', 18.00, 30),
 (2, 'Fresh Salmon', 'Fresh salmon fillet', 15.00, 20);
+
+
+
+USE agora;
+
+UPDATE users
+SET password = '$2y$12$STTO1qTaTJjdF0dEdvGBZuIVmajxuDw0Y2wfL51zNx.0kAlTYQjg6'
+WHERE email = 'alex@foxbutcher.co.nz';
+
+select * from users;
+
+
+ALTER TABLE order_items
+ADD COLUMN unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00;

@@ -13,12 +13,25 @@ class ProductController
     }
 
     // Display all products
-    public function index()
-    {
-        $products = $this->productModel->getAll();
-
-        require __DIR__ . "/../views/buyer/products/index.php";
+    
+// Display products for buyers
+public function index()
+{
+    if (
+        !isset($_SESSION["user_id"]) ||
+        ($_SESSION["role"] ?? "") !== "buyer"
+    ) {
+        header("Location: index.php?page=login");
+        exit;
     }
+
+    $search = trim($_GET["search"] ?? "");
+
+    $products = $this->productModel->getAll($search);
+
+    require __DIR__ . "/../views/buyer/products/index.php";
+}
+
 
     // Display a seller's products
     public function myProducts()
@@ -120,6 +133,27 @@ class ProductController
 
         return $this->productModel->delete($productId);
     }
+
+    // Display product details for buyers
+public function show($productId)
+{
+    if (
+        !isset($_SESSION["user_id"]) ||
+        ($_SESSION["role"] ?? "") !== "buyer"
+    ) {
+        header("Location: index.php?page=login");
+        exit;
+    }
+
+    $product = $this->productModel->findById($productId);
+
+    if (!$product) {
+        header("Location: index.php?page=browse-products");
+        exit;
+    }
+
+    require __DIR__ . "/../views/buyer/products/show.php";
+}
 }
 
 ?>

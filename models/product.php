@@ -11,15 +11,39 @@ class Product
     }
 
     // Get all products
-    public function getAll()
-    {
-        $sql = "SELECT * FROM products ORDER BY product_id DESC";
+    
+// Get all products or search products
+public function getAll($search = "")
+{
+    if ($search !== "") {
+
+        $sql = "SELECT * FROM products
+                WHERE product_name LIKE ?
+                OR description LIKE ?
+                ORDER BY product_id DESC";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $keyword = "%" . $search . "%";
+
+        $stmt->execute([
+            $keyword,
+            $keyword
+        ]);
+
+    } else {
+
+        $sql = "SELECT * FROM products
+                ORDER BY product_id DESC";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
     // Find a product using its ID
     public function findById($productId)

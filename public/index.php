@@ -572,18 +572,66 @@ switch ($page) {
 
     case "buyer-dashboard":
 
-        if (
-            !isset($_SESSION["user_id"]) ||
-            ($_SESSION["role"] ?? "") !== "buyer"
-        ) {
+    if (
+        !isset($_SESSION["user_id"]) ||
+        ($_SESSION["role"] ?? "") !== "buyer"
+    ) {
+        header("Location: index.php?page=login");
+        exit;
+    }
 
-            header("Location: index.php?page=login");
-            exit;
+    require __DIR__ . "/../views/buyer/index.php";
+    break;
 
-        }
 
-        echo "Buyer Dashboard";
-        break;
+    // ======================================
+// BUYER PROFILE
+// ======================================
+
+case "buyer-profile":
+
+    $buyerController->profile();
+    break;
+
+
+// ======================================
+// UPDATE BUYER PROFILE
+// ======================================
+
+case "update-buyer-profile":
+
+    if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+        header("Location: index.php?page=buyer-profile");
+        exit;
+    }
+
+    $result = $buyerController->updateProfile(
+        $_POST["full_name"] ?? "",
+        $_POST["email"] ?? ""
+    );
+
+    if ($result) {
+        header("Location: index.php?page=buyer-profile&success=updated");
+    } else {
+        header("Location: index.php?page=buyer-profile&error=failed");
+    }
+
+    exit;
+
+    
+// ======================================
+// BROWSE PRODUCTS
+// ======================================
+
+case "browse-products":
+
+    $productController->index();
+    break;
+
+case "product-details":
+
+    $productController->show($_GET["id"] ?? 0);
+    break;
 
 
     // ======================================

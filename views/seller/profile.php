@@ -1,7 +1,7 @@
 
 <?php
 
-require __DIR__ . "/../../layouts/header.php";
+require __DIR__ . "/../layouts/header.php";
 
 // Get seller information
 $fullName = htmlspecialchars($seller["full_name"] ?? "");
@@ -227,4 +227,5 @@ document.addEventListener("keydown", function(event) {
 </script>
 
 
-/* <?php require __DIR__ . "/../../layouts/footer.php"; ?> */
+
+<?php require __DIR__ . "/../layouts/footer.php"; ?>
