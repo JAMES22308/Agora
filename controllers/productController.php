@@ -116,23 +116,34 @@ public function index()
     }
 
     // Delete a product
-    public function delete($productId)
-    {
-        if (
-            !isset($_SESSION["user_id"]) ||
-            $_SESSION["role"] !== "seller"
-        ) {
-            return false;
-        }
-
-        $product = $this->productModel->findById($productId);
-
-        if (!$product || $product["seller_id"] != $_SESSION["user_id"]) {
-            return false;
-        }
-
-        return $this->productModel->delete($productId);
+    // Delete a product
+// Delete a product
+public function delete($productId)
+{
+    if (
+        !isset($_SESSION["user_id"]) ||
+        ($_SESSION["role"] ?? "") !== "seller"
+    ) {
+        return false;
     }
+
+    $product = $this->productModel->findById($productId);
+
+    if (!$product || $product["seller_id"] != $_SESSION["user_id"]) {
+        return false;
+    }
+
+    $deleted = $this->productModel->delete($productId);
+
+    if (!$deleted) {
+        $_SESSION["error"] =
+            "This product cannot be deleted because it is associated with existing orders.";
+    } else {
+        $_SESSION["success"] = "Product deleted successfully.";
+    }
+
+    return $deleted;
+}
 
     // Display product details for buyers
 public function show($productId)

@@ -117,14 +117,25 @@ class Product
     }
 
     // Delete a product
-    public function delete($productId)
-    {
-        $sql = "DELETE FROM products WHERE product_id = ?";
+    // Delete a product
+public function delete($productId)
+{
+    $sql = "DELETE FROM products WHERE product_id = ?";
 
-        $stmt = $this->conn->prepare($sql);
+    $stmt = $this->conn->prepare($sql);
 
+    try {
         return $stmt->execute([$productId]);
+    } catch (PDOException $e) {
+
+        // Product is referenced by an existing order
+        if ($e->getCode() === "23000") {
+            return false;
+        }
+
+        throw $e;
     }
+}
 }
 
 ?>

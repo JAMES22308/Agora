@@ -575,30 +575,24 @@ switch ($page) {
     // DELETE PRODUCT
     // ======================================
 
-    case "delete-product":
+   case "delete-product":
 
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-
-            header("Location: index.php?page=my-products");
-            exit;
-
-        }
-
-        $result = $productController->delete(
-            $_POST["product_id"] ?? 0
-        );
-
-        if ($result) {
-
-            header("Location: index.php?page=my-products&success=deleted");
-
-        } else {
-
-            header("Location: index.php?page=my-products&error=failed");
-
-        }
-
+    if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+        header("Location: index.php?page=my-products");
         exit;
+    }
+
+    $result = $productController->delete(
+        $_POST["product_id"] ?? 0
+    );
+
+    if ($result) {
+        header("Location: index.php?page=my-products&success=deleted");
+    } else {
+        header("Location: index.php?page=my-products&error=failed");
+    }
+
+    exit;
 
 
     // ======================================

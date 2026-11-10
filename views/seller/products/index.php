@@ -16,8 +16,8 @@ if (($_GET["success"] ?? "") === "added") {
     $success = "Product deleted successfully!";
 }
 
-if (isset($_GET["error"])) {
-    $error = "The operation failed. Please check your details.";
+if (($_GET["error"] ?? "") === "failed") {
+    $error = "This product cannot be deleted because it is associated with existing orders.";
 }
 
 ?>
