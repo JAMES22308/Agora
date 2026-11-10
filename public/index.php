@@ -28,7 +28,7 @@ require_once __DIR__ . "/../controllers/ProductController.php";
 require_once __DIR__ . "/../controllers/AdminController.php";
 require_once __DIR__ . "/../controllers/OrderController.php";
 
-
+require_once __DIR__ . "/../models/Business.php";
 // ==========================================
 // CREATE CONTROLLER OBJECTS
 // ==========================================
@@ -42,7 +42,7 @@ $productController = new ProductController($conn);
 $orderController = new OrderController($conn);
 $adminController = new AdminController($conn);
 
-
+$businessModel = new Business($conn);
 // ==========================================
 // GET REQUESTED PAGE
 // ==========================================
@@ -99,40 +99,73 @@ switch ($page) {
     // REGISTER
     // ======================================
 
-    case "register":
+    // case "register":
 
-        $error = "";
-        $success = "";
+    //     $error = "";
+    //     $success = "";
 
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    //     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            $fullName = $_POST["full_name"] ?? "";
-            $email = $_POST["email"] ?? "";
-            $password = $_POST["password"] ?? "";
-            $role = $_POST["role"] ?? "";
+    //         $fullName = $_POST["full_name"] ?? "";
+    //         $email = $_POST["email"] ?? "";
+    //         $password = $_POST["password"] ?? "";
+    //         $role = $_POST["role"] ?? "";
 
-            if (
-                $authController->register(
-                    $fullName,
-                    $email,
-                    $password,
-                    $role
-                )
-            ) {
+    //         if (
+    //             $authController->register(
+    //                 $fullName,
+    //                 $email,
+    //                 $password,
+    //                 $role
+    //             )
+    //         ) {
 
-                $success = "Account created successfully! You can now log in.";
+    //             $success = "Account created successfully! You can now log in.";
 
-            } else {
+    //         } else {
 
-                $error = "Registration failed. Check your details or try another email.";
+    //             $error = "Registration failed. Check your details or try another email.";
 
-            }
+    //         }
+    //     }
+
+    //     require __DIR__ . "/../views/auth/register.php";
+    //     break;
+
+        case "register":
+
+    $error = "";
+    $success = "";
+
+    $businesses = $businessModel->getAll();
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+        $fullName = $_POST["full_name"] ?? "";
+        $email = $_POST["email"] ?? "";
+        $password = $_POST["password"] ?? "";
+        $businessId = $_POST["business_id"] ?? "";
+
+        if (
+            $authController->register(
+                $fullName,
+                $email,
+                $password,
+                $businessId
+            )
+        ) {
+
+            $success = "Account created successfully! You can now log in.";
+
+        } else {
+
+            $error = "Registration failed. Check your details or try another email.";
+
         }
+    }
 
-        require __DIR__ . "/../views/auth/register.php";
-        break;
-
-
+    require __DIR__ . "/../views/auth/register.php";
+    break;
     // ======================================
     // DASHBOARD REDIRECTION
     // ======================================

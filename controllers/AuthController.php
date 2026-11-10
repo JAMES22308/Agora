@@ -2,14 +2,17 @@
 <?php
 
 require_once __DIR__ . "/../models/User.php";
+require_once __DIR__ . "/../models/Business.php";
 
 class AuthController
 {
     private $userModel;
+    private $businessModel;
 
     public function __construct($conn)
     {
         $this->userModel = new User($conn);
+        $this->businessModel = new Business($conn);
     }
 
     // Log in an existing user
@@ -40,53 +43,49 @@ class AuthController
         return true;
     }
 
-    // Register a new user
-    public function register($fullName, $email, $password, $role)
+    // Register a new buyer
+    public function register($fullName, $email, $password, $businessId)
     {
         $fullName = trim($fullName);
         $email = trim($email);
 
-        // Check required fields
         if (
             $fullName === "" ||
             $email === "" ||
-            $password === ""
+            $password === "" ||
+            $businessId === ""
         ) {
             return false;
         }
 
-        // Check email format
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
 
-        // Allow only buyer and seller registration
-        if (!in_array($role, ["buyer", "seller"])) {
-            return false;
-        }
-
-        // Check password length
         if (strlen($password) < 8) {
             return false;
         }
 
-        // Check whether email already exists
         if ($this->userModel->findByEmail($email)) {
             return false;
         }
 
-        // Hash the password
-        $passwordHash = password_hash(
-            $password,
-            PASSWORD_DEFAULT
-        );
+        // Validate that the selected business exists
+        $businessId = filter_var($businessId, FILTER_VALIDATE_INT);
 
-        // Save the new user
-        return $this->userModel->create(
+        if (!$businessId || !$this->businessModel->findById($businessId)) {
+            return false;
+        }
+
+        // Hash the password
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+        // Public registration is for buyers only
+        return $this->userModel->createBuyerForBusiness(
+            $businessId,
             $fullName,
             $email,
-            $passwordHash,
-            $role
+            $passwordHash
         );
     }
 
@@ -94,7 +93,6 @@ class AuthController
     public function logout()
     {
         $_SESSION = [];
-
         session_destroy();
     }
 }

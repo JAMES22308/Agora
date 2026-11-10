@@ -8,9 +8,9 @@ require __DIR__ . "/../layouts/header.php";
 
     <div class="auth-card">
 
-        <h1>Create an Account</h1>
+        <h1>Create a Buyer Account</h1>
 
-        <p>Join Agora and start shopping or selling.</p>
+        <p>Join Agora and start shopping.</p>
 
         <?php if (!empty($error)): ?>
             <p class="error-message">
@@ -18,11 +18,16 @@ require __DIR__ . "/../layouts/header.php";
             </p>
         <?php endif; ?>
 
+        <?php if (!empty($success)): ?>
+            <p class="success-message">
+                <?php echo htmlspecialchars($success); ?>
+            </p>
+        <?php endif; ?>
+
         <form action="index.php?page=register" method="POST">
 
             <div class="form-group">
                 <label for="full_name">Full Name</label>
-
                 <input
                     type="text"
                     id="full_name"
@@ -33,7 +38,6 @@ require __DIR__ . "/../layouts/header.php";
 
             <div class="form-group">
                 <label for="email">Email Address</label>
-
                 <input
                     type="email"
                     id="email"
@@ -44,22 +48,27 @@ require __DIR__ . "/../layouts/header.php";
 
             <div class="form-group">
                 <label for="password">Password</label>
-
                 <input
                     type="password"
                     id="password"
                     name="password"
+                    minlength="8"
                     required
                 >
             </div>
 
             <div class="form-group">
-                <label for="role">Account Type</label>
+                <label for="business_id">Select Business</label>
 
-                <select id="role" name="role" required>
-                    <option value="">Select Account Type</option>
-                    <option value="buyer">Buyer</option>
-                    <option value="seller">Seller</option>
+                <select id="business_id" name="business_id" required>
+                    <option value="">Choose a business</option>
+
+                    <?php foreach ($businesses as $business): ?>
+                        <option value="<?php echo htmlspecialchars($business["business_id"]); ?>">
+                            <?php echo htmlspecialchars($business["business_name"]); ?>
+                        </option>
+                    <?php endforeach; ?>
+
                 </select>
             </div>
 
