@@ -1,0 +1,242 @@
+
+/* =====================================
+   BUSINESS ADMIN PROFILE PAGE
+===================================== */
+
+.business-profile-page {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+/* =====================================
+   PAGE HEADING
+===================================== */
+
+.business-profile-page .page-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: 25px;
+}
+
+.business-profile-page .page-heading h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+
+.business-profile-page .page-heading p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* =====================================
+   BACK TO DASHBOARD
+===================================== */
+
+.business-profile-page .back-link {
+    display: inline-block;
+    padding: 9px 15px;
+    margin-bottom: 20px;
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.business-profile-page .back-link:hover {
+    background: #e2e8f0;
+}
+
+/* =====================================
+   PROFILE CARD
+===================================== */
+
+.business-profile-page .profile-card {
+    width: 100%;
+    max-width: 750px;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.business-profile-page .profile-card h2 {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #1e293b;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* =====================================
+   BUSINESS LOGO
+===================================== */
+
+.business-profile-page .logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.business-profile-page .logo-section label {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.business-profile-page .business-logo {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+.business-profile-page .logo-placeholder {
+    width: 130px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    color: #64748b;
+    font-size: 13px;
+    text-align: center;
+}
+
+.business-profile-page .logo-section input[type="file"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+    color: #475569;
+    font-size: 13px;
+}
+
+.business-profile-page .logo-section small {
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* =====================================
+   FORM FIELDS
+===================================== */
+
+.business-profile-page .form-group {
+    margin-bottom: 22px;
+}
+
+.business-profile-page .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.business-profile-page .form-group input {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    color: #334155;
+    background: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.business-profile-page .form-group input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* =====================================
+   SAVE CHANGES BUTTON
+===================================== */
+
+.business-profile-page .profile-card form > button {
+    padding: 11px 20px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.business-profile-page .profile-card form > button:hover {
+    background: #1d4ed8;
+}
+
+/* =====================================
+   SUCCESS AND ERROR MESSAGES
+===================================== */
+
+.business-profile-page .message {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+.business-profile-page .message.success {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.business-profile-page .message.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* =====================================
+   RESPONSIVE DESIGN
+===================================== */
+
+@media (max-width: 700px) {
+
+    .business-profile-page {
+        width: 90%;
+    }
+
+    .business-profile-page .page-heading h1 {
+        font-size: 24px;
+    }
+
+    .business-profile-page .profile-card {
+        padding: 20px;
+    }
+
+    .business-profile-page .profile-card form > button {
+        width: 100%;
+    }
+
+    .business-profile-page .logo-section input[type="file"] {
+        max-width: 100%;
+    }
+}

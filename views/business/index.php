@@ -6,6 +6,7 @@ $pageTitle = "Business Dashboard - Agora";
 require __DIR__ . "/../layouts/header.php";
 
 ?>
+
 <link rel="stylesheet" href="css/business/index.css">
 
 <section class="dashboard">
@@ -22,14 +23,38 @@ require __DIR__ . "/../layouts/header.php";
 
         <div class="card business-information">
 
-            <h2>
-                <?php echo htmlspecialchars($business["business_name"]); ?>
-            </h2>
+            <div class="business-branding">
 
-            <p>
-                Manage your business information, buyers and sellers
-                from this dashboard.
-            </p>
+                <?php if (!empty($business["logo"])): ?>
+
+                    <img
+                        src="<?= htmlspecialchars($business["logo"]) ?>"
+                        alt="Business Logo"
+                        class="dashboard-business-logo"
+                    >
+
+                <?php else: ?>
+
+                    <div class="dashboard-logo-placeholder">
+                        <span>No Logo</span>
+                    </div>
+
+                <?php endif; ?>
+
+                <div class="business-details">
+
+                    <h2>
+                        <?= htmlspecialchars($business["business_name"]) ?>
+                    </h2>
+
+                    <p>
+                        Manage your business information, buyers and sellers
+                        from this dashboard.
+                    </p>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -57,7 +82,6 @@ require __DIR__ . "/../layouts/header.php";
 
         </a>
 
-
         <!-- MANAGE SELLERS -->
 
         <a href="index.php?page=manage-sellers" class="card dashboard-link">
@@ -70,7 +94,6 @@ require __DIR__ . "/../layouts/header.php";
             </p>
 
         </a>
-
 
         <!-- MANAGE BUYERS -->
 

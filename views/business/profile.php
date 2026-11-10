@@ -6,14 +6,15 @@
 <section class="business-profile-page">
 
     <div class="page-heading">
+        <a href="index.php?page=business-dashboard" class="back-link">
+            Back to Dashboard
+        </a>
         <div>
             <h1>Business Profile</h1>
             <p>View and update your business information.</p>
         </div>
 
-        <a href="index.php?page=business-dashboard" class="back-link">
-            Back to Dashboard
-        </a>
+        
     </div>
 
     <?php if (!empty($success)): ?>

@@ -1,23 +1,87 @@
 
-/* Clickable dashboard cards */
+/* =====================================
+   BUSINESS BRANDING
+===================================== */
+
+.business-information {
+    padding: 25px;
+}
+
+.business-branding {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dashboard-business-logo {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+    padding: 8px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.dashboard-logo-placeholder {
+    width: 85px;
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    color: #64748b;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.business-details h2 {
+    margin-bottom: 8px;
+    color: #1e293b;
+    font-size: 23px;
+}
+
+.business-details p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+    .business-branding {
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .dashboard-business-logo,
+    .dashboard-logo-placeholder {
+        width: 65px;
+        height: 65px;
+    }
+
+    .business-details h2 {
+        font-size: 19px;
+    }
+}
+
+
+/* Remove underline from dashboard cards */
 
 .dashboard-link {
-    display: block;
-    color: inherit;
     text-decoration: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: inherit;
 }
 
 .dashboard-link:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
 }
 
-.dashboard-link h3 {
-    color: #2563eb;
-    margin-bottom: 10px;
-}
-
+.dashboard-link h3,
 .dashboard-link p {
-    color: #64748b;
+    text-decoration: none;
 }
