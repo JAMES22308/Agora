@@ -1,28 +1,33 @@
--- ==========================================
--- RESET AGORA DATABASE
--- ==========================================
 
+-- =====================================================
+-- AGORA E-COMMERCE SYSTEM
+-- COMPLETE DATABASE SETUP
+-- =====================================================
+
+-- 1. RESET DATABASE
 DROP DATABASE IF EXISTS agora;
 
-CREATE DATABASE agora;
+CREATE DATABASE agora
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
 
 USE agora;
 
 
--- ==========================================
--- 1. BUSINESSES
--- ==========================================
+-- =====================================================
+-- 2. BUSINESSES TABLE
+-- =====================================================
 
 CREATE TABLE businesses (
     business_id INT AUTO_INCREMENT PRIMARY KEY,
     business_name VARCHAR(100) NOT NULL,
     logo VARCHAR(255) NULL
-);
+) ENGINE=InnoDB;
 
 
--- ==========================================
--- 2. USERS
--- ==========================================
+-- =====================================================
+-- 3. USERS TABLE
+-- =====================================================
 
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -38,136 +43,177 @@ CREATE TABLE users (
     ) NOT NULL,
     is_active TINYINT(1) NOT NULL DEFAULT 1,
 
-    FOREIGN KEY (business_id)
+    CONSTRAINT fk_users_business
+        FOREIGN KEY (business_id)
         REFERENCES businesses(business_id)
-);
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+) ENGINE=InnoDB;
 
 
--- ==========================================
--- 3. PRODUCTS
--- ==========================================
+-- =====================================================
+-- 4. PRODUCTS TABLE
+-- =====================================================
 
 CREATE TABLE products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
     seller_id INT NOT NULL,
     product_name VARCHAR(150) NOT NULL,
-    description TEXT,
-    price DECIMAL(10, 2) NOT NULL,
+    description TEXT NULL,
+    price DECIMAL(10,2) NOT NULL,
     quantity INT NOT NULL DEFAULT 0,
 
-    FOREIGN KEY (seller_id)
+    CONSTRAINT chk_product_price
+        CHECK (price >= 0),
+
+    CONSTRAINT chk_product_quantity
+        CHECK (quantity >= 0),
+
+    CONSTRAINT fk_products_seller
+        FOREIGN KEY (seller_id)
         REFERENCES users(user_id)
-);
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+) ENGINE=InnoDB;
 
 
--- ==========================================
--- 4. ORDERS
--- ==========================================
+-- =====================================================
+-- 5. ORDERS TABLE
+-- =====================================================
 
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     buyer_id INT NOT NULL,
-    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (buyer_id)
+    CONSTRAINT fk_orders_buyer
+        FOREIGN KEY (buyer_id)
         REFERENCES users(user_id)
-);
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+) ENGINE=InnoDB;
 
 
--- ==========================================
--- 5. ORDER ITEMS
--- ==========================================
+-- =====================================================
+-- 6. ORDER ITEMS TABLE
+-- =====================================================
 
 CREATE TABLE order_items (
     order_item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
 
-    FOREIGN KEY (order_id)
-        REFERENCES orders(order_id),
+    CONSTRAINT chk_order_item_quantity
+        CHECK (quantity > 0),
 
-    FOREIGN KEY (product_id)
+    CONSTRAINT chk_order_item_price
+        CHECK (unit_price >= 0),
+
+    CONSTRAINT fk_order_items_order
+        FOREIGN KEY (order_id)
+        REFERENCES orders(order_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_order_items_product
+        FOREIGN KEY (product_id)
         REFERENCES products(product_id)
-);
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+) ENGINE=InnoDB;
 
 
-USE agora;
+-- =====================================================
+-- 7. INSERT BUSINESSES
+-- =====================================================
 
-INSERT INTO businesses (business_name)
+INSERT INTO businesses (business_name, logo)
 VALUES
-('NZ Mega Supplies'),
-('Fox Butcher');
+('NZ Mega Supplies', NULL),
+('Fox Butcher', NULL);
 
 
+-- =====================================================
+-- 8. INSERT TEST USERS
+-- TEMPORARY PLAIN-TEXT PASSWORD:
+-- AgoraTest123!
+-- =====================================================
 
+-- NZ Mega Supplies
 INSERT INTO users
-(full_name, email, password, role, business_id, is_active)
+    (business_id, full_name, email, password, role, is_active)
 VALUES
+(1, 'Sam Colo', 'sam@nzmega.test',
+ '$2y$12$T1daVxzxBI2K0piNaHG5OOzGFd1dvhuxA3YPhx17XYlPz/wcSYRvC', 'business_admin', 1),
 
-(
-    'Sam Colo',
-    'sam@nzmega.co.nz',
-    '$2y$12$eBzlcx/iXBcg862rPHfaZuBhUq277g7F6RPCpGLSRhA6J59KhE7Vu',
-    'business_admin',
-    1,
-    1
-),
+(1, 'James Kennedy', 'james@nzmega.test',
+ '$2y$12$T1daVxzxBI2K0piNaHG5OOzGFd1dvhuxA3YPhx17XYlPz/wcSYRvC', 'seller', 1),
 
-(
-    'James Kennedy',
-    'james@nzmega.co.nz',
-    '$2y$12$nrLuGqvwhgCKTeqE4xIpSuVWCI.Adc5SGwm9tOTODXNyRYqZAHfgK',
-    'seller',
-    1,
-    1
-),
+(1, 'Emma Wilson', 'emma@nzmega.test',
+ '$2y$12$T1daVxzxBI2K0piNaHG5OOzGFd1dvhuxA3YPhx17XYlPz/wcSYRvC', 'buyer', 1);
 
-(
-    'Alex Fox',
-    'alex@foxbutcher.co.nz',
-    '$2y$12$ROdKbPxJED6PU.L.w14zQOvmE4dq9jd9vw3XZDAPhZRtCpxFVNsOES',
-    'business_admin',
-    2,
-    1
-),
 
-(
-    'Lisa Schmitt',
-    'lisa@foxbutcher.co.nz',
-    '$2y$12$vsnDwPpgKGQ/xCY.vTupXOUCn8oKcaXsTB8YQ.rnBvY0G4KxLQR/S',
-    'buyer',
-    2,
-    1
-),
+-- Fox Butcher
+INSERT INTO users
+    (business_id, full_name, email, password, role, is_active)
+VALUES
+(2, 'Alex Fox', 'alex@foxbutcher.test',
+ '$2y$12$T1daVxzxBI2K0piNaHG5OOzGFd1dvhuxA3YPhx17XYlPz/wcSYRvC', 'business_admin', 1),
 
-(
-    'Simon Lau',
-    'simon@agora.co.nz',
-    '$2y$12$ROdKbPxJED6PU.L.w14zQOvmE4dq9jd9vw3XZDAPhZRtCpxFVNsOES',
-    'agora_admin',
-    NULL,
-    1
-);
+(2, 'David Brown', 'david@foxbutcher.test',
+ '$2y$12$T1daVxzxBI2K0piNaHG5OOzGFd1dvhuxA3YPhx17XYlPz/wcSYRvC', 'seller', 1),
 
+(2, 'Lisa Schmitt', 'lisa@foxbutcher.test',
+ '$2y$12$T1daVxzxBI2K0piNaHG5OOzGFd1dvhuxA3YPhx17XYlPz/wcSYRvC', 'buyer', 1);
+
+
+-- Agora Platform Administrator
+INSERT INTO users
+    (business_id, full_name, email, password, role, is_active)
+VALUES
+(NULL, 'Simon Lau', 'simon@agora.test',
+ 'AgoraTest123!', 'agora_admin', 1);
+
+
+-- =====================================================
+-- 9. INSERT SAMPLE PRODUCTS
+-- =====================================================
 
 INSERT INTO products
-(seller_id, product_name, description, price, quantity)
+    (seller_id, product_name, description, price, quantity)
 VALUES
-(2, 'Chicken Breast', 'Fresh chicken breast', 12.50, 50),
-(2, 'Beef Steak', 'Premium beef steak', 18.00, 30),
-(2, 'Fresh Salmon', 'Fresh salmon fillet', 15.00, 20);
 
+-- James Kennedy: NZ Mega Supplies
+(2, 'Chicken Breast',
+ 'Fresh chicken breast suitable for everyday meals.',
+ 12.50, 30),
 
+(2, 'Beef Steak',
+ 'Quality beef steak supplied by NZ Mega Supplies.',
+ 25.00, 20),
 
-USE agora;
+(2, 'Fresh Salmon',
+ 'Fresh salmon fillets.',
+ 18.90, 15),
 
-UPDATE users
-SET password = '$2y$12$STTO1qTaTJjdF0dEdvGBZuIVmajxuDw0Y2wfL51zNx.0kAlTYQjg6'
-WHERE email = 'alex@foxbutcher.co.nz';
+-- David Brown: Fox Butcher
+(5, 'Premium Beef Mince',
+ 'Fresh premium beef mince from Fox Butcher.',
+ 16.50, 25),
+
+(5, 'Pork Sausages',
+ 'Fresh pork sausages.',
+ 11.90, 40),
+
+(5, 'Lamb Chops',
+ 'Fresh lamb chops supplied by Fox Butcher.',
+ 22.00, 18);
+
 
 select * from users;
-
-
-ALTER TABLE order_items
-ADD COLUMN unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00;
+select * from products;
+select * from orders;
+select * from order_items;
+select * from businesses;
